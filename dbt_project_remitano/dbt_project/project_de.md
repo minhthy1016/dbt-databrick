@@ -1,5 +1,5 @@
 ## Some Note to run DBT on Databricks 
-- You need to config profiles.yml file and hand it /Workspace/Users/minhthy1016@gmail.com/.dbt/profiles.yml
+- You need to config profiles.yml file and hand it /Workspace/Users/<your_email>/.dbt/profiles.yml
 -  All test in run_dbt you can run via Databricks notebook panel
 -  Here are some pictures of the architect and the DWH Unity Catalog in DataBricks after I ran all the code and designs.
 
