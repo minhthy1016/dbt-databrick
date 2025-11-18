@@ -1,0 +1,53 @@
+name: "databricks_warehouse"
+version: "1.0.0"
+config-version: 2
+
+profile: "databricks_dwh"
+
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+
+analysis-paths: ["analysis"]
+docs-paths: ["docs"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+quoting:
+  database: true
+  schema: true
+  identifier: true
+
+models:
+  databricks_warehouse:
+
+    staging:
+      +schema: bronze
+      +materialized: view
+      +tags: ["bronze"]
+      +database: workspace   # optional but explicit for UC
+
+    int:
+      +schema: silver
+      +materialized: view
+      +tags: ["silver"]
+      +database: workspace
+
+    marts:
+      +schema: gold
+      +materialized: table
+      +tags: ["gold"]
+      +database: workspace
+
+
+snapshots:
+  databricks_warehouse:
+    +schema: silver
+    +target_schema: silver
+    +tags: ["snapshot"]
+
+tests:
+  +severity: error

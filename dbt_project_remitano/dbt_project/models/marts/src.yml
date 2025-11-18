@@ -1,0 +1,11 @@
+
+version: 2
+
+sources:
+  - name: raw              # source name you use in `source()`
+    catalog: workspace     # optional; only add if UC
+    schema: raw            # UC schema
+    tables:
+      - name: raw_users
+      - name: raw_transactions
+      - name: combine_raw_rates

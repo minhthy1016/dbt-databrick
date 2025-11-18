@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_users
+    columns:
+      - name: user_id
+        tests:
+          - unique:
+              config:
+                severity: warn
+          - not_null
+
+  - name: stg_transactions
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+          - unique:
+              config:
+                severity: warn
+      - name: status
+        tests:
+          - accepted_values: 
+              arguments: 
+                values: ['completed', 'canceled', 'canceled_by_system']
+
+  - name: int_transactions_enriched_new
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+          - unique:
+                config:
+                  severity: warn
+      
+  - name: fact_transactions
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+          - unique:
+              config:
+                severity: warn
+
+  - name: agg_transactions_daily
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - unique:
+              config:
+                severity: warn
+
+
