@@ -15,7 +15,7 @@ kyc_hist as (
         created_at,
         updated_at,
         dbt_valid_from as valid_from,
-        dbt_valid_to as valid_to , 
+        dbt_valid_to as valid_to ,
         dbt_updated_at
     from {{ ref('kyc_users') }}
 ),
@@ -31,7 +31,7 @@ select
     tx.source_currency,
     tx.destination_currency,
     tx.source_amount,
-    tx.destination_amount, 
+    tx.destination_amount,
     fx.close_price as close_rate_to_usd,
     cast(tx.source_amount as float) * fx.close_price as amount_usd,
     tx.status,
@@ -47,7 +47,3 @@ left join kyc_hist kyc
 left join fx
     on tx.source_currency = fx.symbol
     and date(fx.close_time) = date(tx.created_at)
-
-{% if is_incremental() %}
-  where tx.created_at > (select max(transaction_timestamp) from {{ this }})
-{% endif %}
