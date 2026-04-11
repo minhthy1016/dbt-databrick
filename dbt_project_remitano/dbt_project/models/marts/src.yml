@@ -9,3 +9,7 @@ sources:
       - name: raw_users
       - name: raw_transactions
       - name: combine_raw_rates
+        loaded_at_field: close_time
+        freshness:
+          warn_after: {count: 24, period: hour}
+          error_after: {count: 48, period: hour}

@@ -5,50 +5,69 @@ models:
     columns:
       - name: user_id
         tests:
-          - unique:
-              config:
-                severity: warn
+          - unique
           - not_null
 
   - name: stg_transactions
     columns:
       - name: transaction_id
         tests:
+          - unique
           - not_null
-          - unique:
-              config:
-                severity: warn
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_users')
+              field: user_id
       - name: status
         tests:
-          - accepted_values: 
-              arguments: 
-                values: ['completed', 'canceled', 'canceled_by_system']
+          - accepted_values:
+              values: ['completed', 'canceled', 'canceled_by_system']
+      - name: source_amount
+        tests:
+          - not_null
+      - name: destination_amount
+        tests:
+          - not_null
 
-  - name: int_transactions_enriched_new
+  - name: int_transactions_enriched
     columns:
       - name: transaction_id
         tests:
+          - unique
           - not_null
-          - unique:
-                config:
-                  severity: warn
-      
+      - name: amount_usd
+        tests:
+          - not_null
+
   - name: fact_transactions
     columns:
       - name: transaction_id
         tests:
+          - unique
           - not_null
-          - unique:
-              config:
-                severity: warn
+      - name: user_id
+        tests:
+          - not_null
+      - name: amount_usd
+        tests:
+          - not_null
 
   - name: agg_transactions_daily
     columns:
       - name: user_id
         tests:
           - not_null
-          - unique:
-              config:
-                severity: warn
 
+  - name: agg_transactions_monthly
+    columns:
+      - name: user_id
+        tests:
+          - not_null
 
+  - name: agg_transactions_quarterly
+    columns:
+      - name: user_id
+        tests:
+          - not_null
